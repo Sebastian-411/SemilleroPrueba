@@ -19,11 +19,10 @@ public class InvoiceService {
     @Autowired
     private DetailsRepository detailsRepository;
 
-    public double consultInvoice(Long numFactura) {
-        Invoice invoice = invoiceRepository.findById(numFactura)
-                .orElseThrow(() -> new RuntimeException("Factura no encontrada"));
+    public double consultInvoice(Long numInvoice) {
+        Invoice invoice = invoiceRepository.findById(numInvoice).orElseThrow(() -> new RuntimeException("Factura no encontrada"));
 
-        List<Details> detailsInvoice = detailsRepository.findByInvoiceNumInvoice(numFactura);
+        List<Details> detailsInvoice = detailsRepository.findByInvoiceNumInvoice(numInvoice);
 
         double totalInvoice = detailsInvoice.stream()
                 .mapToDouble(details -> details.getAmount() * details.getPrice())
